@@ -47,7 +47,7 @@ public class HostInfoEnvironmentPostProcessor implements EnvironmentPostProcesso
 	}
 
 	@Override
-	public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+	public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) { // jxh: 获取本地网络地址
 		InetUtils.HostInfo hostInfo = getFirstNonLoopbackHostInfo(environment);
 		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 		map.put("spring.cloud.client.hostname", hostInfo.getHostname());

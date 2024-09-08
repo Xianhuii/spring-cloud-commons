@@ -104,6 +104,7 @@ public class BootstrapApplicationListener implements ApplicationListener<Applica
 			return;
 		}
 		ConfigurableApplicationContext context = null;
+		// jxh: 获取配置文件名，默认为bootstrap
 		String configName = environment.resolvePlaceholders("${spring.cloud.bootstrap.name:bootstrap}");
 		for (ApplicationContextInitializer<?> initializer : event.getSpringApplication().getInitializers()) {
 			if (initializer instanceof ParentContextApplicationContextInitializer) {

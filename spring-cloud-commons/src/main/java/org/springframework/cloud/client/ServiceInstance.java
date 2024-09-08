@@ -25,7 +25,7 @@ import java.util.Map;
  * @author Spencer Gibb
  * @author Tim Ysewyn
  */
-public interface ServiceInstance {
+public interface ServiceInstance { // jxh: 服务实例
 
 	/**
 	 * @return The unique instance ID as registered.

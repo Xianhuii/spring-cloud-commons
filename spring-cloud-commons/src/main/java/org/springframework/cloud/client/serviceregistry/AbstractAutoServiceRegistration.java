@@ -115,8 +115,8 @@ public abstract class AbstractAutoServiceRegistration<R extends Registration>
 				return;
 			}
 		}
-		this.port.compareAndSet(0, event.getWebServer().getPort());
-		this.start();
+		this.port.compareAndSet(0, event.getWebServer().getPort()); // jxh: 获取web服务器的端口
+		this.start(); // jxh: 启动服务注册
 	}
 
 	@Override
@@ -150,12 +150,17 @@ public abstract class AbstractAutoServiceRegistration<R extends Registration>
 		// only initialize if nonSecurePort is greater than 0 and it isn't already running
 		// because of containerPortInitializer below
 		if (!this.running.get()) {
+			// jxh: 获取本地服务实例信息，发布InstancePreRegisteredEvent事件
 			this.context.publishEvent(new InstancePreRegisteredEvent(this, getRegistration()));
+			// jxh: 触发RegistrationLifecycle#postProcessBeforeStartRegister
 			registrationLifecycles.forEach(
 					registrationLifecycle -> registrationLifecycle.postProcessBeforeStartRegister(getRegistration()));
+			// jxh: 服务注册
 			register();
+			// jxh: 触发RegistrationLifecycle#postProcessAfterStartRegister
 			this.registrationLifecycles.forEach(
 					registrationLifecycle -> registrationLifecycle.postProcessAfterStartRegister(getRegistration()));
+			// jxh: 注册管理器
 			if (shouldRegisterManagement()) {
 				this.registrationManagementLifecycles
 					.forEach(registrationManagementLifecycle -> registrationManagementLifecycle
